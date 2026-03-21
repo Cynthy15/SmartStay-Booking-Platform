@@ -1,5 +1,10 @@
+// src/services/api.js
+
 import axios from 'axios'
 
+// ─────────────────────────────────────────────────────────────
+// REQUIRED STATIC VALUES
+// ─────────────────────────────────────────────────────────────
 const DEFAULT_PLACE_ID = 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ' // Paris by default
 
 function assertApiKey() {
@@ -8,11 +13,14 @@ function assertApiKey() {
   }
 }
 
+// ─────────────────────────────────────────────────────────────
+// AXIOS INSTANCE (with timeout to prevent infinite loading)
+// ─────────────────────────────────────────────────────────────
 assertApiKey()
 
 const api = axios.create({
   baseURL: 'https://airbnb19.p.rapidapi.com',
-  timeout: 10000, // 10 seconds max
+  timeout: 10000, // ⏱ 10 seconds max
   headers: {
     'x-rapidapi-key': import.meta.env.VITE_RAPID_API_KEY,
     'x-rapidapi-host': 'airbnb19.p.rapidapi.com',
@@ -20,31 +28,44 @@ const api = axios.create({
   },
 })
 
+// ─────────────────────────────────────────────────────────────
+// SIMPLE CACHE (avoid repeated API calls)
+// ─────────────────────────────────────────────────────────────
 const cache = new Map()
 
+// ─────────────────────────────────────────────────────────────
+// HELPER: DELAY FUNCTION
+// ─────────────────────────────────────────────────────────────
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms))
 
+// ─────────────────────────────────────────────────────────────
+// INTERCEPTOR: HANDLE RATE LIMIT + NETWORK ERRORS
+// ─────────────────────────────────────────────────────────────
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { config, response } = error
 
-    //  Retry if rate limited, but ONLY ONCE
+    // 🔁 Retry if rate limited, but ONLY ONCE
     if (response?.status === 429 && !config._retry) {
-      console.warn('Rate limit hit. Retrying in 2s...')
+      console.warn('⚠️ Rate limit hit. Retrying in 2s...')
       config._retry = true
       await sleep(2000)
       return api(config)
     }
 
-    // Timeout or network issue
+    // ⏱ Timeout or network issue
     if (error.code === 'ECONNABORTED') {
-      console.error(' Request timeout')
+      console.error('⏱ Request timeout')
     }
 
     return Promise.reject(error)
   }
 )
+
+// ─────────────────────────────────────────────────────────────
+// FETCH LISTINGS
+// ─────────────────────────────────────────────────────────────
 export async function fetchListings({
   placeId,
   checkin,
@@ -58,13 +79,13 @@ export async function fetchListings({
 
   const cacheKey = JSON.stringify(params)
 
-  // Return cached data
+  // ✅ Return cached data
   if (cache.has(cacheKey)) {
     console.log('⚡ Using cached listings')
     return cache.get(cacheKey)
   }
 
-  console.log('Fetching listings for placeId=', safePlaceId, 'checkin=', checkin, 'checkout=', checkout, 'adults=', adults)
+  console.log('🚀 Fetching listings for placeId=', safePlaceId, 'checkin=', checkin, 'checkout=', checkout, 'adults=', adults)
 
   try {
     const { data } = await api.get('/api/v2/searchPropertyByPlaceId', { params })
@@ -87,7 +108,10 @@ export async function fetchListings({
     return []
   }
 }
+
+// ─────────────────────────────────────────────────────────────
 // FETCH DETAILS
+// ─────────────────────────────────────────────────────────────
 export async function fetchListingDetails(id) {
   const cacheKey = `details-${id}`
 
@@ -96,7 +120,7 @@ export async function fetchListingDetails(id) {
     return cache.get(cacheKey)
   }
 
-  console.log('Fetching listing details...')
+  console.log('🚀 Fetching listing details...')
 
   try {
     const { data } = await api.get(
@@ -131,7 +155,10 @@ export async function fetchListingDetails(id) {
     }
   }
 }
-// FALLBACK DATA
+
+// ─────────────────────────────────────────────────────────────
+// FALLBACK DATA (VERY IMPORTANT)
+// ─────────────────────────────────────────────────────────────
 function getFallbackListings() {
   return [
     { id: 'mock-1', name: 'Charming Montmartre Apartment', city: 'Paris', personCapacity: 4, bedrooms: 2, bathrooms: 1, rating: '4.92', reviewCount: 128, priceLabel: '$145 / night', price: 145, isSuperhost: true, images: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800'] },
@@ -142,7 +169,10 @@ function getFallbackListings() {
     { id: 'mock-6', name: 'Modern Penthouse with Rooftop', city: 'Paris', personCapacity: 4, bedrooms: 2, bathrooms: 2, rating: '4.94', reviewCount: 76, priceLabel: '$310 / night', price: 310, isSuperhost: true, images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800'] },
   ]
 }
-// NORMALIZATION 
+
+// ─────────────────────────────────────────────────────────────
+// NORMALIZATION (UNCHANGED)
+// ─────────────────────────────────────────────────────────────
 function normalizeListings(data) {
   const raw = data?.data?.list ?? data?.data ?? []
 

@@ -1,121 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+// src/App.jsx
+import { Routes, Route } from 'react-router-dom'
+import { FavoritesProvider } from './context/FavoritesContext'
+import { FiltersProvider } from './context/FiltersContext'
+import Navbar from './components/layout/Navbar'
+import ProtectedRoute from './components/layout/ProtectedRoute'
+import BookingModal from './components/bookings/BookingModal'
+import Home from './pages/Home'
+import ListingDetails from './pages/ListingDetails'
+import Bookings from './pages/Bookings'
+import Favorites from './pages/Favorites'
+import Login from './pages/Login'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <FiltersProvider>
+      <FavoritesProvider>
+        {/* Navbar appears on all pages */}
+        <Navbar />
 
-      <div className="ticks"></div>
+        {/* Global booking modal */}
+        <BookingModal />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {/* Page routes */}
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/listing/:id" element={<ListingDetails />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/login" element={<Login />} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+          {/* Protected route */}
+          <Route
+            path="/bookings"
+            element={
+              <ProtectedRoute>
+                <Bookings />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 fallback */}
+          <Route
+            path="*"
+            element={
+              <div style={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center',
+                justifyContent: 'center', minHeight: '60vh', gap: 16, textAlign: 'center'
+              }}>
+                <p style={{ fontSize: 72 }}>🏡</p>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28 }}>Page not found</h2>
+                <a href="/" className="btn btn-primary">Go home</a>
+              </div>
+            }
+          />
+        </Routes>
+      </FavoritesProvider>
+    </FiltersProvider>
   )
 }
-
-export default App
