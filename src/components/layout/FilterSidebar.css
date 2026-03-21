@@ -1,0 +1,190 @@
+/* FilterSidebar.css */
+
+.filter-sidebar {
+  background: white;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: sticky;
+  top: 90px;
+  height: fit-content;
+  min-width: 220px;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  color: var(--forest);
+}
+
+.filter-header h3 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.filter-reset {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--terracotta);
+  cursor: pointer;
+  padding: 2px 0;
+  text-decoration: underline;
+}
+
+.filter-section {
+  padding: 16px 0;
+  border-top: 1px solid var(--gray-pale);
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 10px;
+}
+
+.sub-label {
+  font-size: 11px;
+  color: var(--gray-mid);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Price Range */
+.price-range-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: var(--gray-pale);
+  border-radius: var(--radius-sm);
+}
+
+.range-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.range-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.range-slider {
+  width: 100%;
+  accent-color: var(--terracotta);
+  cursor: pointer;
+}
+
+/* Star buttons */
+.star-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.star-btn {
+  padding: 7px 6px;
+  border: 1.5px solid var(--sand);
+  border-radius: var(--radius-sm);
+  background: white;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-dark);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+
+.star-btn:hover,
+.star-btn.active {
+  border-color: var(--gold);
+  background: rgba(212, 168, 68, 0.08);
+  color: var(--gold);
+}
+
+/* Guests */
+.guests-control {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.guest-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sand);
+  background: white;
+  font-size: 18px;
+  color: var(--charcoal);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  line-height: 1;
+}
+
+.guest-btn:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+.guest-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal);
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Date inputs */
+.date-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date-input {
+  border: 1.5px solid var(--sand);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color var(--transition);
+  width: 100%;
+  background: white;
+}
+
+.date-input:focus {
+  border-color: var(--terracotta);
+}
