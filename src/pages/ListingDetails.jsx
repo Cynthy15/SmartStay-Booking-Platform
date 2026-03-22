@@ -1,6 +1,3 @@
-// src/pages/ListingDetails.jsx
-// Shows full property details — pulls real data from the API using the listing ID
-
 import { useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import {

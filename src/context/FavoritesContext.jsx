@@ -1,5 +1,3 @@
-// src/context/FavoritesContext.jsx
-// Global state for favorites — persisted to localStorage
 
 import { createContext, useContext, useState, useEffect } from 'react'
 

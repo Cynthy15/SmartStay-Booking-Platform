@@ -1,6 +1,3 @@
-// src/context/FiltersContext.jsx
-// Global state for search filters
-
 import { createContext, useContext, useState } from 'react'
 
 const FiltersContext = createContext(null)

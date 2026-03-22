@@ -1,5 +1,3 @@
-// src/components/ui/ErrorState.jsx
-
 import { AlertTriangle, RefreshCw, WifiOff } from 'lucide-react'
 import './ErrorState.css'
 

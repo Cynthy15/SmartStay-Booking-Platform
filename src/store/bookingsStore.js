@@ -1,16 +1,9 @@
-// src/store/bookingsStore.js
-// Zustand store for booking state management
-// Zustand is simpler than Redux — just create a store with state + actions
-
 import { create } from 'zustand'
 
 const useBookingsStore = create((set, get) => ({
-  // ── State ────────────────────────────────────────────────────────────────
   bookings: JSON.parse(localStorage.getItem('staynest_bookings') || '[]'),
   isBookingModalOpen: false,
   selectedListing: null,
-
-  // ── Actions ───────────────────────────────────────────────────────────────
 
   // Open the booking modal for a specific listing
   openBookingModal: (listing) =>

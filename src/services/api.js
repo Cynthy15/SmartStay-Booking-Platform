@@ -1,4 +1,4 @@
-// src/services/api.js
+import create from 'zustand'
 import axios from 'axios'
 
 const DEFAULT_PLACE_ID = 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ' // Paris

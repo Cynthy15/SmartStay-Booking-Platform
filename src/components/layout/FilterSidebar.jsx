@@ -1,5 +1,3 @@
-// src/components/layout/FilterSidebar.jsx
-
 import { SlidersHorizontal, Star, DollarSign } from 'lucide-react'
 import { useFilters } from '../../context/FiltersContext'
 import './FilterSidebar.css'

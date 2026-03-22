@@ -1,5 +1,3 @@
-// src/components/layout/Navbar.jsx
-
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Search, Heart, Calendar, User, LogOut, Menu, X } from 'lucide-react'

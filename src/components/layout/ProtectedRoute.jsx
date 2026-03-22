@@ -1,5 +1,3 @@
-// src/components/layout/ProtectedRoute.jsx
-// Wraps routes that require authentication
 // If user is not logged in, redirects to /login
 
 import { Navigate, useLocation } from 'react-router-dom'

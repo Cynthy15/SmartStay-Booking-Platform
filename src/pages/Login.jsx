@@ -1,6 +1,3 @@
-// src/pages/Login.jsx
-// Authentication page — simulates sign in
-
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react'

@@ -1,5 +1,3 @@
-// src/components/bookings/BookingModal.jsx
-
 import { useState } from 'react'
 import { X, Calendar, Users, CreditCard, CheckCircle } from 'lucide-react'
 import useBookingsStore from '../../store/bookingsStore'

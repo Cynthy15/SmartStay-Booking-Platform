@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import { useMemo } from 'react'
 import { MapPin, TrendingUp } from 'lucide-react'
 import { useListings } from '../hooks/useListings'
