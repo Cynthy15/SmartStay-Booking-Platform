@@ -1,10 +1,10 @@
-# 🏡 StayNest — Accommodation Booking Platform
+# StayNest — Accommodation Booking Platform
 
 A production-grade Airbnb-inspired booking platform built with React + Vite, featuring real API integration, smart caching, and a polished warm-toned UI.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Install dependencies
@@ -60,7 +60,7 @@ src/
 
 ---
 
-## 🔌 API Integration
+##  API Integration
 
 **Provider:** RapidAPI — Airbnb19  
 **Base URL:** `https://airbnb19.p.rapidapi.com`
@@ -79,7 +79,7 @@ API keys are **never hardcoded** — always loaded from `.env` via `import.meta.
 
 ---
 
-## ⚡ State Management
+##  State Management
 
 | Type | Tool | Used For |
 |------|------|----------|
@@ -96,7 +96,7 @@ API keys are **never hardcoded** — always loaded from `.env` via `import.meta.
 
 ---
 
-## 🛣️ Routes
+## Routes
 
 | Path | Page | Auth Required |
 |------|------|---------------|
@@ -108,7 +108,7 @@ API keys are **never hardcoded** — always loaded from `.env` via `import.meta.
 
 ---
 
-## 💾 Persistence
+##  Persistence
 
 - **Favorites** — saved to `localStorage` via `FavoritesContext`
 - **Bookings** — saved to `localStorage` via Zustand store
@@ -116,7 +116,7 @@ API keys are **never hardcoded** — always loaded from `.env` via `import.meta.
 
 ---
 
-## 🎨 Design System
+## Design System
 
 Built with CSS custom properties:
 - **Fonts:** Playfair Display (headings) + DM Sans (body)
@@ -125,11 +125,15 @@ Built with CSS custom properties:
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 ```bash
 npm run build
 ```
 
-Deploy the `dist/` folder to **Vercel** or **Netlify**.  
+Deploy the `dist/` folder to **Vercel**.  
 Set `VITE_RAPID_API_KEY` as an environment variable in your deployment dashboard.
+
+## Author 
+Cynthy
+
