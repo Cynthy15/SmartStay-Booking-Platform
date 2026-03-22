@@ -17,7 +17,7 @@ export default function Navbar() {
 
   // Popular destination shortcuts with their placeIds
   const DESTINATIONS = [
-    { name: 'Paris', placeId: 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ' },
+    { name: 'Paris', placeId: 'ChIJD7fiBh9u5kcRYJSMaMOCCw' },
     { name: 'New York', placeId: 'ChIJOwg_06VPwokRYv534QaPC8g' },
     { name: 'Tokyo', placeId: 'ChIJ51cu8IcbXWARiRtXIothAS4' },
     { name: 'Bali', placeId: 'ChIJoQ8Q6NNB0S0RkOYkS7EPkSQ' },
@@ -55,8 +55,8 @@ export default function Navbar() {
       <div className="navbar-inner container">
         {/* Logo */}
         <Link to="/" className="navbar-logo">
-          <span className="logo-icon">⌂</span>
-          <span className="logo-text">StayNest</span>
+          <span className="logo-icon"></span>
+          <span className="logo-text">StaySmart</span>
         </Link>
 
         {/* Search Bar */}
@@ -143,7 +143,7 @@ export default function Navbar() {
 
           {/* Mobile menu toggle */}
           <button
-            className="mobile-menu-toggle btn btn-ghost"
+            className="mobile-menu-toggle"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}

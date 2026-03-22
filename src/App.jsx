@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Routes, Route } from 'react-router-dom'
 import { FavoritesProvider } from './context/FavoritesContext'
 import { FiltersProvider } from './context/FiltersContext'
@@ -15,13 +14,8 @@ export default function App() {
   return (
     <FiltersProvider>
       <FavoritesProvider>
-        {/* Navbar appears on all pages */}
         <Navbar />
-
-        {/* Global booking modal */}
         <BookingModal />
-
-        {/* Page routes */}
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />

@@ -9,23 +9,21 @@ import Loader from '../components/ui/Loader'
 import ErrorState from '../components/ui/ErrorState'
 import './Home.css'
 
-// Fallback mock listings
-const MOCK_LISTINGS = [
-  { id: 'mock-1', name: 'Charming Montmartre Apartment', city: 'Paris', personCapacity: 4, bedrooms: 2, bathrooms: 1, rating: '4.92', reviewCount: 128, priceLabel: '$145 / night', price: 145, isSuperhost: true, images: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600'] },
-  { id: 'mock-2', name: 'Sunny Loft with Eiffel Tower View', city: 'Paris', personCapacity: 2, bedrooms: 1, bathrooms: 1, rating: '4.87', reviewCount: 94, priceLabel: '$220 / night', price: 220, isSuperhost: false, images: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600'] },
-  { id: 'mock-3', name: 'Cozy Studio near the Louvre', city: 'Paris', personCapacity: 2, bedrooms: 1, bathrooms: 1, rating: '4.75', reviewCount: 67, priceLabel: '$98 / night', price: 98, isSuperhost: false, images: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600'] },
-  { id: 'mock-4', name: 'Elegant Haussmann Flat', city: 'Paris', personCapacity: 6, bedrooms: 3, bathrooms: 2, rating: '4.96', reviewCount: 203, priceLabel: '$380 / night', price: 380, isSuperhost: true, images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600'] },
-  { id: 'mock-5', name: 'Bohemian Artist Retreat', city: 'Paris', personCapacity: 3, bedrooms: 2, bathrooms: 1, rating: '4.80', reviewCount: 41, priceLabel: '$175 / night', price: 175, isSuperhost: false, images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600'] },
-  { id: 'mock-6', name: 'Modern Penthouse with Rooftop', city: 'Paris', personCapacity: 4, bedrooms: 2, bathrooms: 2, rating: '4.94', reviewCount: 76, priceLabel: '$310 / night', price: 310, isSuperhost: true, images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600'] },
-]
-
 export default function Home() {
   const { filters } = useFilters()
 
-  // Fetch listings from API (with caching/fallback)
-  const { data: apiListings, isLoading, isError, error, refetch, isFetching } = useListings(filters)
+  // Fetch listings via React Query
+  const {
+    data: apiListings,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    isFetching,
+  } = useListings(filters)
 
-  const rawListings = apiListings?.length > 0 ? apiListings : MOCK_LISTINGS
+  // Fallback to empty array if nothing
+  const rawListings = apiListings || []
 
   // Apply client-side filters
   const listings = useMemo(() => {
@@ -44,34 +42,47 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      {/* Hero */}
+      {/* Hero Section */}
       <div className="home-hero">
         <div className="container">
-          <p className="hero-eyebrow"><MapPin size={14} /> Exploring {filters.placeName}</p>
+          <p className="hero-eyebrow">
+            <MapPin size={14} /> Exploring {filters.placeName || 'Paris'}
+          </p>
           <h1 className="hero-title">Find your perfect place to stay</h1>
           <p className="hero-subtitle">
-            {isLoading ? 'Searching for available properties...' : `${listings.length} stunning properties found`}
+            {isLoading
+              ? 'Searching for available properties...'
+              : `${listings.length} stunning properties found`}
           </p>
         </div>
       </div>
 
-      {/* Layout */}
+      {/* Main Layout */}
       <div className="container home-layout">
         <FilterSidebar />
 
         <main className="listings-main">
+          {/* Show notice if using mock data */}
           {usingMockData && !isLoading && (
-            <div className="demo-notice"><TrendingUp size={14} /> Showing sample listings — connect your RapidAPI key to see live results</div>
+            <div className="demo-notice">
+              <TrendingUp size={14} /> Showing sample listings — connect your RapidAPI key to see live results
+            </div>
           )}
 
+          {/* Refetch progress bar */}
           {isFetching && !isLoading && (
-            <div className="refetch-bar"><div className="refetch-progress" /></div>
+            <div className="refetch-bar">
+              <div className="refetch-progress" />
+            </div>
           )}
 
+          {/* Loader */}
           {isLoading && <Loader count={8} />}
 
+          {/* Error state */}
           {isError && !isLoading && <ErrorState error={error} onRetry={refetch} />}
 
+          {/* Listings grid */}
           {!isLoading && !isError && (
             listings.length === 0 ? (
               <div className="empty-state">
