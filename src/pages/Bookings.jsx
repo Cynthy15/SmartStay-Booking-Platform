@@ -115,13 +115,18 @@ export default function Bookings() {
     )
   }
 
-  const upcoming = bookings.filter(
+  const userBookings = bookings.filter((b) => b.guestEmail === user.email)
+
+  const upcoming = userBookings.filter(
     (b) => b.status !== 'cancelled' && new Date(b.checkin) >= new Date()
   )
-  const past = bookings.filter(
+  const past = userBookings.filter(
     (b) => b.status !== 'cancelled' && new Date(b.checkout) < new Date()
   )
-  const cancelled = bookings.filter((b) => b.status === 'cancelled')
+  const active = userBookings.filter(
+    (b) => b.status !== 'cancelled' && new Date(b.checkin) < new Date() && new Date(b.checkout) >= new Date()
+  )
+  const cancelled = userBookings.filter((b) => b.status === 'cancelled')
 
   function handleCancel(id) {
     if (window.confirm('Are you sure you want to cancel this booking?')) {
@@ -141,7 +146,7 @@ export default function Bookings() {
       </div>
 
       <div className="container bookings-content">
-        {bookings.length === 0 ? (
+        {userBookings.length === 0 ? (
           <div className="no-bookings">
             <span className="no-bookings-icon">✈️</span>
             <h3>No trips yet</h3>
@@ -150,6 +155,18 @@ export default function Bookings() {
           </div>
         ) : (
           <>
+            {/* Active */}
+            {active.length > 0 && (
+              <section className="bookings-section">
+                <h2 className="bookings-section-title">Active · {active.length}</h2>
+                <div className="bookings-list">
+                  {active.map((b) => (
+                    <BookingCard key={b.id} booking={b} onCancel={handleCancel} />
+                  ))}
+                </div>
+              </section>
+            )}
+
             {/* Upcoming */}
             {upcoming.length > 0 && (
               <section className="bookings-section">
